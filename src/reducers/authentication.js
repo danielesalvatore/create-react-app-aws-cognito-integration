@@ -1,4 +1,4 @@
-import {LOGIN_ERROR, LOGIN_SUCCESS} from '../containers/Login/constants';
+import {LOGIN_ERROR, LOGIN_SUCCESS} from '../containers/Redirect/constants';
 import {LOGOUT_SUCCESS} from '../containers/Logout/constants';
 //import {FETCH_AUTH_USER_ERROR, FETCH_AUTH_USER_REQUEST, FETCH_AUTH_USER_SUCCESS} from '../containers/App/constants';
 

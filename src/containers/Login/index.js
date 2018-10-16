@@ -1,94 +1,29 @@
-import React, {Component} from 'react';
-import Form from './form'
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {HOME} from '../../config/routes'
-import {getAuthenticationError, getAuthUser, getToken} from '../../utils/authentication'; // 1. import Auth User selectors
-import {login} from './actions';
-import {Row, Col, Alert} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
+import {AUTH_DOMAIN_PREFIX, AWS_COGNITO_REGION, USER_POOL_ID, REDIRECT_URI} from '../../config'
 
-class Login extends Component {
-
-    goToDefaultRoute() {
-        const {history} = this.props;
-        history.push(HOME);
-    }
-
-    componentDidUpdate() {
-
-        const {token} = this.props;
-
-        /**
-         *   If user has a token (valid or not) redirect to home
-         *   If the token is not valid,
-         *   the axios interceptor will redirect user to login page
-         */
-        if (token) {
-            this.goToDefaultRoute()
-        }
-    }
+class Redirect extends PureComponent {
 
     componentDidMount() {
+        // Redirect to AWS Cognito
+        const loginUri = `https://${AUTH_DOMAIN_PREFIX}.auth.${AWS_COGNITO_REGION}.amazoncognito.com/login?response_type=token&client_id=${USER_POOL_ID}&redirect_uri=${encodeURI(REDIRECT_URI)}`;
 
-        const {token} = this.props;
-
-        if (token) {
-            this.goToDefaultRoute()
-        }
+        window.location = loginUri;
     }
-
-    shouldComponentUpdate(nextProps) {
-        const {token, authUser, loginError} = this.props; //3. access auth user object
-
-        return (JSON.stringify(token) !== JSON.stringify(nextProps.token)) ||
-            JSON.stringify(nextProps.authUser) !== JSON.stringify(authUser) ||
-            JSON.stringify(nextProps.loginError) !== JSON.stringify(loginError);
-    }
-
 
     render() {
-        const {loginError, onSubmit} = this.props;
-
-        return (
-            <Row>
-                <Col xs={1} md={4}/>
-                <Col md={4}>
-
-                    {loginError && <Alert bsStyle="danger">
-                        Username or password is incorrect</Alert>}
-
-                    <Form
-                        onSubmit={onSubmit}
-                    />
-
-                </Col>
-                <Col xs={1} md={4}/>
-            </Row>
-        );
+        return <Row>
+            <Col md={12}>
+               You will now be redirected to AWS Cognito login page.
+            </Col>
+        </Row>;
     }
 
 }
 
-const mapStateToProps = (state) => ({
-    authUser: getAuthUser(state), //2. add auth user to component props
-    loginError: getAuthenticationError(state),
-    token: getToken()
-});
+const mapDispatchToState = () => ({});
 
-const onSubmit = (payload) => (dispatch) => {
+Redirect = connect(undefined, mapDispatchToState())(Redirect);
 
-    const credentials = {
-        username: payload.username,
-        password: payload.password,
-    };
-
-    login({credentials, dispatch});
-
-};
-
-Login = withRouter(connect(
-    mapStateToProps,
-    {onSubmit}
-)(Login));
-
-export default Login
+export default Redirect;

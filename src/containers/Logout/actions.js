@@ -1,10 +1,9 @@
 import {LOGOUT_REQUEST, LOGOUT_SUCCESS} from './constants';
 import LocalStorage from 'localStorage'
 import {getToken} from '../../utils/authentication'
-import * as ROUTES from '../../config/routes'
 import * as api from '../../api'
 
-export const logout = ({history}) => (dispatch) => {
+export const logout = () => (dispatch) => {
 
     const onLogoutSuccess = () => {
 
@@ -13,8 +12,6 @@ export const logout = ({history}) => (dispatch) => {
         dispatch({
             type: LOGOUT_SUCCESS,
         });
-
-        history.push(ROUTES.LOGIN);
 
     };
 
