@@ -7,33 +7,38 @@ import {HOME, LOGIN} from "../../config/routes";
 class Redirect extends PureComponent {
 
     getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[[\]]/g, "\\$&");
-        let regex = new RegExp("[?#&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
+        if (!url) url = window.location.hash;
+
+        const hash2Obj = url.substr(1)
+            .split("&")
+            .map(v => v.split("="))
+            .reduce((pre, [key, value]) => ({...pre, [key]: value}), {});
+
+        console.log(hash2Obj)
+
+        return hash2Obj[name] ? decodeURIComponent(hash2Obj[name]) : undefined;
     }
 
     componentDidMount() {
         const {history, onLoginSuccess, onLoginError} = this.props;
 
-        const authToken = this.getParameterByName("id_token");
+        const idToken = this.getParameterByName("id_token");
+        const accessToken = this.getParameterByName("access_token");
         const cognitoError = this.getParameterByName("error");
 
-        if (cognitoError != null && cognitoError !== "") {
+        if (cognitoError) {
             const error = this.getParameterByName("error_description");
             onLoginError({error});
             return;
-
         }
-        if (authToken === null || authToken === "") {
+
+
+        if (!idToken) {
             history.push(LOGIN);
             return;
         }
 
-        onLoginSuccess({token: onLoginSuccess});
+        onLoginSuccess({idToken, accessToken});
 
         history.push(HOME)
     }
@@ -41,7 +46,7 @@ class Redirect extends PureComponent {
     render() {
         return <Row>
             <Col md={12}>
-                You are logout now
+                Redirecting to home...
             </Col>
         </Row>;
     }

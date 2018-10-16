@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import {isAuthenticated} from '../../utils/authentication'
+import {isAuthenticated} from '../../commons/authentication'
 import {LOGIN} from "../../config/routes";
 
-/**
- * Higher-order component (HOC) to wrap restricted pages
- */
 
 function privateRoute(BaseComponent) {
     class Private extends Component {

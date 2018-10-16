@@ -1,6 +1,6 @@
 import {LOGOUT_REQUEST, LOGOUT_SUCCESS} from './constants';
 import LocalStorage from 'localStorage'
-import {getToken} from '../../utils/authentication'
+import {getToken} from '../../commons/authentication'
 import * as api from '../../api'
 
 export const logout = () => (dispatch) => {

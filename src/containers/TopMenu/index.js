@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {isAuthenticated} from '../../utils/authentication';
+import {isAuthenticated} from '../../commons/authentication';
 import PublicItems from './PublicItems'
 import PrivateItems from './PrivateItems'
 import {bindActionCreators} from "redux";
@@ -15,8 +15,10 @@ class TopMenu extends PureComponent {
 
         return (<Navbar fixedTop>
             <Navbar.Header>
-                <Navbar.Brand>
-                    <Link to={HOME}>FAO</Link>
+                <Navbar.Brand style={{width: 50}}>
+                    <Link to={HOME}>
+                        FAO
+                    </Link>
                 </Navbar.Brand>
             </Navbar.Header>
 

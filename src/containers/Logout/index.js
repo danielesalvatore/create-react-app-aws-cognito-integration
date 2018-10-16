@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {logout} from "./actions"
+import {Row, Col} from 'react-bootstrap';
 
 class Logout extends PureComponent {
 
@@ -12,7 +13,11 @@ class Logout extends PureComponent {
     }
 
     render() {
-        return <span/>;
+        return <Row>
+            <Col md={12}>
+                <p>Bye bye...</p>
+            </Col>
+        </Row>;
     }
 
 }

@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
-import {AUTH_DOMAIN_PREFIX, AWS_COGNITO_REGION, USER_POOL_ID, REDIRECT_URI} from '../../config'
+import {USER_POOL_CLIENT_ID, REDIRECT_URI, COGNITO_URL} from '../../config'
 
-class Redirect extends PureComponent {
+class Login extends PureComponent {
 
     componentDidMount() {
         // Redirect to AWS Cognito
-        const loginUri = `https://${AUTH_DOMAIN_PREFIX}.auth.${AWS_COGNITO_REGION}.amazoncognito.com/login?response_type=token&client_id=${USER_POOL_ID}&redirect_uri=${encodeURI(REDIRECT_URI)}`;
+        const loginUri = `${COGNITO_URL}/login?response_type=token&client_id=${USER_POOL_CLIENT_ID}&redirect_uri=${encodeURI(REDIRECT_URI)}`;
 
         window.location = loginUri;
     }
@@ -15,7 +15,7 @@ class Redirect extends PureComponent {
     render() {
         return <Row>
             <Col md={12}>
-               You will now be redirected to AWS Cognito login page.
+                You will now be redirected to AWS Cognito login page...
             </Col>
         </Row>;
     }
@@ -24,6 +24,6 @@ class Redirect extends PureComponent {
 
 const mapDispatchToState = () => ({});
 
-Redirect = connect(undefined, mapDispatchToState())(Redirect);
+Login = connect(undefined, mapDispatchToState())(Login);
 
-export default Redirect;
+export default Login;

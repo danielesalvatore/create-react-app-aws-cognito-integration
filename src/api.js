@@ -1,18 +1,10 @@
-//import axios from './config/axios';
-//export const login = ({username, password}) => axios.post('login', {username: username, password: password});
+import axios from './config/axios';
+import {COGNITO_URL} from "./config";
 
-export const login = () => {
-    return new Promise((resolve) => {
-        resolve({
-            data: {
-                id: "dani-id",
-                userId: "dani"
-            }
-        });
-    });
-};
 export const logout = () => {
     return new Promise((resolve) => {
         resolve();
     });
 };
+
+export const fetchUserInfo = () => axios.get(`${COGNITO_URL}/oauth2/userInfo`);

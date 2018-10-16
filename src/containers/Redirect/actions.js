@@ -1,11 +1,12 @@
 import {LOGIN_ERROR, LOGIN_SUCCESS} from './constants';
 import LocalStorage from 'localStorage'
 
-export const onLoginSuccess = ({token}) => (dispatch) => {
+export const onLoginSuccess = ({idToken, accessToken}) => (dispatch) => {
 
     // Save token and user id to local storage
     try {
-        LocalStorage.setItem("token", token);
+        LocalStorage.setItem("idToken", idToken);
+        LocalStorage.setItem("accessToken", accessToken);
     } catch (e) {
         dispatch({
             type: LOGIN_ERROR,
@@ -15,7 +16,10 @@ export const onLoginSuccess = ({token}) => (dispatch) => {
 
     dispatch({
         type: LOGIN_SUCCESS,
-        response: {token: token},
+        response: {
+            idToken,
+            accessToken
+        },
     });
 
 

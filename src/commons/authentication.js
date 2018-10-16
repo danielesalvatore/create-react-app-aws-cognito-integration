@@ -4,7 +4,7 @@ export const getAuthUser = (state) =>
     state.authentication;
 
 export const getToken = () => {
-    return LocalStorage.getItem("token");
+    return LocalStorage.getItem("idToken");
 };
 
 export const isAuthenticated = () => !!getToken();
@@ -13,8 +13,8 @@ export const getAuthenticationError = (state) => {
     return state.authentication.error;
 };
 
-export const getAuthenticationLoading = (state) => {
-    return state.authentication.loading;
+export const getAuthenticationIsFetching = (state) => {
+    return state.authentication.isFetching;
 };
 
 export const hasAuthUser = (state) => {
